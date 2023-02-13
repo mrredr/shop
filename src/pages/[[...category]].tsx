@@ -6,6 +6,7 @@ import { GetServerSideProps, NextPage } from "next";
 import { useState } from "react";
 import { ProductsList } from "@/components/ProductsList";
 import { Product } from "@/types";
+import { SearchBar } from "@/components/SearchBar";
 
 const realeway = Raleway({ subsets: ["latin"] });
 
@@ -55,10 +56,11 @@ export const Home: NextPage<{
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
+        <SearchBar />
         <h1 className={`${realeway.className} ${styles.title}`}>
           Find your favorite products now.
         </h1>
-        <ul>
+        <ul className={styles.products}>
           <ProductsList page={1} key={1} fetchedProducts={props.products} />
           {pages}
         </ul>

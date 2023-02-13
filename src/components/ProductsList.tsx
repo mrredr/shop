@@ -2,6 +2,7 @@ import { useFetch } from "@/hooks";
 import { Product, ProductsPayload } from "@/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { ProductItem } from "./ProductItem";
 
 export const ProductsList = ({
   page,
@@ -48,11 +49,7 @@ export const ProductsList = ({
   return (
     <>
       {products.map((product) => (
-        <li key={product.id}>
-          <h4>{product.name}</h4>
-          {product.brand && <div>{product.brand}</div>}
-          {product.price && <div>{product.price}</div>}
-        </li>
+        <ProductItem key={product.id} product={product} />
       ))}
     </>
   );

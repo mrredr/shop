@@ -15,11 +15,12 @@ export default async function handler(
   });
 
   const products = productFetch.payload.products.map(
-    ({ id, name, brand, price }) => ({
+    ({ id, name, brand, price, image }) => ({
       id,
       name,
       brand,
       price,
+      image,
     })
   );
 

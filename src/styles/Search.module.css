@@ -1,0 +1,22 @@
+.inputWrapper {
+  padding: 12px 92px 12px 56px;
+  border: 1px solid var(--color-secondary);
+  border-radius: 48px;
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.icon {
+  position: absolute;
+  left: 18px;
+}
+
+.input {
+  background: transparent;
+  border: none;
+  font-weight: 500;
+  font-size: 14px;
+  outline: transparent;
+  color: var(--color-main);
+}

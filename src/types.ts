@@ -3,6 +3,7 @@ export type Product = {
   brand: string;
   name: string;
   price: number;
+  image: string;
 };
 
 export type ProductsPayload = {
