@@ -14,11 +14,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=10, stale-while-revalidate=59"
   );
-  const res = await getProducts({});
+  const category = (context?.query?.category as string[])?.[0] ?? "";
+  const query = context.query.query as string;
+  const res = await getProducts({ category, query });
+
   return {
     props: {
-      products: res.payload.products,
-      isMore: res.payload.pagination.more,
+      products: res.payload?.products ?? [],
+      isMore: res.payload?.pagination?.more ?? false,
     },
   };
 };
