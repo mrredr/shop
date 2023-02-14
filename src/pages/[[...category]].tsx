@@ -1,9 +1,9 @@
 import Head from "next/head";
-import { Raleway } from "@next/font/google";
+import { Content, Raleway } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
 import { getProducts } from "@/requests";
 import { GetServerSideProps, NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ProductsList } from "@/components/ProductsList";
 import { Product } from "@/types";
 import { SearchBar } from "@/components/SearchBar";
@@ -22,25 +22,31 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       products: res.payload?.products ?? [],
-      isMore: res.payload?.pagination?.more ?? false,
+      more: res.payload?.pagination?.more ?? false,
+      queryKey: category + query,
     },
   };
 };
 
 export const Home: NextPage<{
   products: Product[];
-  isMore: boolean;
-}> = (props) => {
+  more: boolean;
+  queryKey: string;
+}> = ({ products, more, queryKey }) => {
   const [pagesNumber, setPagesNumber] = useState(1);
-  const [isMore, setIsMore] = useState(props.isMore);
+  const [isMore, setIsMore] = useState(more);
   const [isLoading, setIsLoading] = useState(false);
   const pages = [];
+
+  useEffect(() => {
+    setIsMore(more);
+  }, [more]);
 
   for (let i = 2; i <= pagesNumber; i++) {
     pages.push(
       <ProductsList
         page={i}
-        key={i}
+        key={`${queryKey}${i}`}
         noMorePages={() => setIsMore(false)}
         onLoading={(value) => setIsLoading(value)}
       />
@@ -61,11 +67,18 @@ export const Home: NextPage<{
           Find your favorite products now.
         </h1>
         <ul className={styles.products}>
-          <ProductsList page={1} key={1} fetchedProducts={props.products} />
+          <ProductsList
+            page={1}
+            key={`${queryKey}1`}
+            fetchedProducts={products}
+          />
           {pages}
         </ul>
         {isMore && !isLoading && (
-          <button onClick={() => setPagesNumber(pagesNumber + 1)}>
+          <button
+            className={`${realeway.className} ${styles.loadMore}`}
+            onClick={() => setPagesNumber(pagesNumber + 1)}
+          >
             Load more
           </button>
         )}

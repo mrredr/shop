@@ -1,5 +1,5 @@
 .inputWrapper {
-  padding: 12px 92px 12px 56px;
+  padding: 12px 20px 12px 56px;
   border: 1px solid var(--color-secondary);
   border-radius: 48px;
   position: relative;
@@ -19,4 +19,33 @@
   font-size: 14px;
   outline: transparent;
   color: var(--color-main);
+  width: 100%;
+}
+
+.searchDropdown {
+  background: white;
+  position: fixed;
+  width: 100%;
+  top: 80px;
+  height: 100%;
+  padding: 0 20px;
+}
+
+.list {
+  list-style-type: none;
+}
+
+.hr {
+  margin: 16px 0;
+}
+
+.item {
+  font-weight: 400;
+  font-size: 14px;
+  margin-bottom: 16px;
+  text-transform: capitalize;
+}
+
+.item:hover {
+  cursor: pointer;
 }
