@@ -88,6 +88,7 @@ export const SearchBar = () => {
                       className={styles.item}
                       onMouseDown={() => {
                         router.push(`/?query=${suggestion.text}`);
+                        setValue(suggestion.text);
                       }}
                       onMouseOver={() => {
                         router.prefetch(`/?query=${suggestion.text}`);
