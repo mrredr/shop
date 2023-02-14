@@ -60,7 +60,12 @@ export const SearchBar = () => {
               setShowRecent(false);
             }, 1000);
           }}
-          onSubmit={() => console.log("sbmit")}
+          onKeyUp={(e) => {
+            if (e.key == "Enter") {
+              router.push(`/?query=${value}`);
+              setShowPopular(false);
+            }
+          }}
         />
       </div>
       {showPopular && (
