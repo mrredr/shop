@@ -12,8 +12,10 @@ export const useFetch = <T>(url: string | null, opts?: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
 
-  useEffect(() => {
+  const fetchUrl = () => {
     if (!url) return;
+
+    setHasError(false);
     setLoading(true);
     fetch(url, { ...defaultOptions, ...opts })
       .then((data) => data.json())
@@ -25,7 +27,16 @@ export const useFetch = <T>(url: string | null, opts?: any) => {
         setHasError(true);
         setLoading(false);
       });
+  };
+
+  const refetch = () => {
+    fetchUrl();
+  };
+
+  useEffect(() => {
+    if (!url) return;
+    fetchUrl();
   }, [url]);
 
-  return { response, loading, hasError };
+  return { response, loading, hasError, refetch };
 };

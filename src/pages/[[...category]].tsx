@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { Content, Raleway } from "@next/font/google";
 import styles from "@/styles/Home.module.css";
+import buttonStyles from "@/styles/Button.module.css";
 import { getProducts } from "@/requests";
 import { GetServerSideProps, NextPage } from "next";
 import { useEffect, useState } from "react";
@@ -47,7 +48,7 @@ export const Home: NextPage<{
       <ProductsList
         page={i}
         key={`${queryKey}${i}`}
-        noMorePages={() => setIsMore(false)}
+        onLoadMore={(value) => setIsMore(value)}
         onLoading={(value) => setIsLoading(value)}
       />
     );
@@ -76,7 +77,7 @@ export const Home: NextPage<{
         </ul>
         {isMore && !isLoading && (
           <button
-            className={`${realeway.className} ${styles.loadMore}`}
+            className={`${realeway.className} ${buttonStyles.button}`}
             onClick={() => setPagesNumber(pagesNumber + 1)}
           >
             Load more

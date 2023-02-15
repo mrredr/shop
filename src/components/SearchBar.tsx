@@ -12,7 +12,7 @@ export const SearchBar = () => {
   const [showRecent, setShowRecent] = useState(false);
   const [showPopular, setShowPopular] = useState(false);
   const [searchSuggestions, setSearchSuggestions] = useState([]);
-  const { response, loading, hasError } = useFetch<{ text: string }[]>(
+  const { response } = useFetch<{ text: string }[]>(
     `/api/popularSearch?query=${value}`
   );
 

@@ -2,17 +2,19 @@ import { useFetch } from "@/hooks";
 import { Product, ProductsPayload } from "@/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import buttonStyles from "@/styles/Button.module.css";
+import styles from "@/styles/ProductsList.module.css";
 import { ProductItem } from "./ProductItem";
 
 export const ProductsList = ({
   page,
   fetchedProducts,
-  noMorePages,
+  onLoadMore,
   onLoading,
 }: {
   page: number;
   fetchedProducts?: Product[];
-  noMorePages?: () => void;
+  onLoadMore?: (arg: boolean) => void;
   onLoading?: (arg: boolean) => void;
 }) => {
   const { query } = useRouter();
@@ -22,7 +24,7 @@ export const ProductsList = ({
   const category = (query?.category as string[])?.[0] ?? "";
   const q = query.query ?? "";
 
-  const { response, loading, hasError } = useFetch<ProductsPayload>(
+  const { response, loading, hasError, refetch } = useFetch<ProductsPayload>(
     fetchedProducts
       ? null
       : `/api/products?page=${page}&category=${category}&query=${q}`
@@ -31,11 +33,15 @@ export const ProductsList = ({
   useEffect(() => {
     if (response) {
       setProducts(response.products);
-      if (response.pagination.more === false && noMorePages) {
-        noMorePages();
+      if (response.pagination.more !== undefined && onLoadMore) {
+        onLoadMore(response.pagination.more);
       }
     }
-  }, [response, noMorePages]);
+  }, [response, onLoadMore]);
+
+  useEffect(() => {
+    if (hasError && onLoadMore) onLoadMore(false);
+  }, [hasError, onLoadMore]);
 
   useEffect(() => {
     if (onLoading) {
@@ -43,8 +49,16 @@ export const ProductsList = ({
     }
   }, [loading, onLoading]);
 
-  if (hasError) return <div>failed to load</div>;
-  if (loading) return <div>loading...</div>;
+  if (hasError)
+    return (
+      <div className={styles.error}>
+        <div>Failed to load</div>
+        <button className={`${buttonStyles.button}`} onClick={() => refetch()}>
+          Try again
+        </button>
+      </div>
+    );
+  if (loading) return <div className={styles.loading}>loading...</div>;
 
   return (
     <>
