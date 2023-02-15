@@ -18,8 +18,8 @@ export const SearchBar = () => {
 
   const router = useRouter();
 
-  const handleChange = (e) => {
-    const val = e.target.value;
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    const val = e.currentTarget.value;
     if (val && showRecent) {
       setShowRecent(false);
       setShowPopular(true);
@@ -28,7 +28,7 @@ export const SearchBar = () => {
       setShowRecent(true);
       setShowPopular(false);
     }
-    setValue(e.target.value);
+    setValue(e.currentTarget.value);
   };
 
   return (
