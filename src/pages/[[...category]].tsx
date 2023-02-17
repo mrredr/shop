@@ -12,10 +12,6 @@ import { SearchBar } from "@/components/SearchBar";
 const realeway = Raleway({ subsets: ["latin"] });
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  context.res.setHeader(
-    "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59"
-  );
   const category = (context?.query?.category as string[])?.[0] ?? "";
   const query = context.query.query as string;
   const res = await getProducts({ category, query });
