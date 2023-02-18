@@ -16,7 +16,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     "Cache-Control",
     "public, s-maxage=10, stale-while-revalidate=59"
   );
-  const category = (context?.query?.category as string[])?.[0] ?? "";
+  let category = (context?.query?.category as string[])?.[0] ?? "";
+  if (category === "index") {
+    category = (context?.query?.category as string[])?.[1] ?? "";
+  }
   const query = context.query.query as string;
   const res = await getProducts({ category, query });
 
