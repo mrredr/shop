@@ -15,5 +15,7 @@ export type ProductsPayload = {
 };
 
 export type ProductsFetch = {
-  payload: ProductsPayload;
+  payload: ProductsPayload & {
+    categories?: Record<string, { products: Product[] }>;
+  };
 };

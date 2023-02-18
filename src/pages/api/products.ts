@@ -14,7 +14,7 @@ export default async function handler(
     query: query as string,
   });
 
-  const products = productFetch.payload.products.map(
+  const products = productFetch.products.map(
     ({ id, name, brand, price, image }) => ({
       id,
       name,
@@ -27,8 +27,8 @@ export default async function handler(
   res.status(200).json({
     products,
     pagination: {
-      more: productFetch.payload.pagination.more,
-      page: productFetch.payload.pagination.page,
+      more: productFetch.pagination.more,
+      page: productFetch.pagination.page,
     },
   });
 }

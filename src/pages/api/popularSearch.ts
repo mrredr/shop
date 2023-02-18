@@ -1,4 +1,4 @@
-import { getProducts, getSearchSuggestions } from "@/requests";
+import { getSearchSuggestions } from "@/requests";
 import { ProductsPayload } from "@/types";
 import type { NextApiRequest, NextApiResponse } from "next";
 

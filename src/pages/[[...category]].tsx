@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { ProductsList } from "@/components/ProductsList";
 import { Product } from "@/types";
 import { SearchBar } from "@/components/SearchBar";
+import { CategoriesMenu } from "@/components/CategoriesMenu";
 
 const realeway = Raleway({ subsets: ["latin"] });
 
@@ -20,13 +21,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (category === "index") {
     category = (context?.query?.category as string[])?.[1] ?? "";
   }
-  const query = context.query.query as string;
-  const res = await getProducts({ category, query });
+  const query = (context.query.query as string) ?? "";
+
+  const res = await getProducts({ category, query, page: "1" });
 
   return {
     props: {
-      products: res.payload?.products ?? [],
-      more: res.payload?.pagination?.more ?? false,
+      products: res.products ?? [],
+      more: res.pagination?.more ?? false,
       queryKey: category + query,
     },
   };
@@ -70,6 +72,7 @@ export const Home: NextPage<{
         <h1 className={`${realeway.className} ${styles.title}`}>
           Find your favorite products now.
         </h1>
+        <CategoriesMenu />
         <ul className={styles.products}>
           <ProductsList
             page={1}
