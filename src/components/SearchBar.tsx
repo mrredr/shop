@@ -1,9 +1,9 @@
 import Image from "next/image";
 import styles from "@/styles/Search.module.css";
 import { Raleway } from "@next/font/google";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetch } from "@/hooks";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 
 const realeway = Raleway({ subsets: ["latin"] });
 
@@ -30,6 +30,12 @@ export const SearchBar = () => {
     }
     setValue(e.currentTarget.value);
   };
+
+  useEffect(() => {
+    if (!router.query.query) {
+      setValue("");
+    }
+  }, [router.query]);
 
   return (
     <>
