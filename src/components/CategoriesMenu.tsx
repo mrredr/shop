@@ -9,8 +9,8 @@ import styles from "@/styles/CategoriesMenu.module.css";
 const Categories = [
   { title: "All", link: "" },
   { title: "Mellomat", link: "mellomat" },
-  { title: "Fructs", link: "frukt" },
-  { title: "Apple", link: "apple" },
+  { title: "Fruits", link: "frukt" },
+  { title: "Apples", link: "apple" },
   { title: "Granny smith apples", link: "granny-smith" },
   { title: "Bananas", link: "banan" },
 ];
